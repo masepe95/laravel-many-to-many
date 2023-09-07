@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Technology;
+use Illuminate\Support\Arr;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -75,6 +76,8 @@ class ProjectController extends Controller
         $project->fill($data);
         $project->save();
 
+        if (array_key_exists('technologies', $data)) $project->technologies()->attach($data['technologies']);
+
         return to_route('admin.projects.show', $project)->with('alert-message', "Project '$project->title' created successfully")->with('alert-type', 'success');
     }
 
@@ -116,7 +119,8 @@ class ProjectController extends Controller
 
         $project->update($data);
 
-        return to_route('admin.projects.show', $project)->with('alert-message', "Project '$project->title' edited successfully")->with('alert-type', 'success');
+        if (!Arr::exists($data, 'technologies') && count($project->technologies)) $project->technologies()->detach();
+        elseif (Arr::exists($data, 'technologies')) $project->technologies()->sync($data['technologies']);
     }
 
     /**
@@ -147,6 +151,7 @@ class ProjectController extends Controller
 
         if ($project->image) Storage::delete($project->image);
 
+        if (count($project->technologies)) $project->technologies()->detach();
 
         $project->forceDelete();
         return to_route('admin.projects.trash')->with('alert-message', "Project '$project->title' deleted successfully")->with('alert-type', 'success');
