@@ -94,7 +94,7 @@ class ProjectController extends Controller
 
         $project_technology_ids = $project->technologies->pluck('id')->toArray();
 
-        return view('admin.projects.edit', compact('project', 'types', 'technologies', 'project_technology_ids'));
+        return view('admin.projects.edit', compact('project', 'categories', 'technologies', 'project_technology_ids'));
     }
 
     /**
