@@ -29,6 +29,15 @@
                     <li>
                         Other Languages: {{ $project->other_langs }}
                     </li>
+                    <li class="my-2">
+                        <strong>Technologies: </strong>
+                        @forelse ($project->technologies as $technology)
+                            <span
+                                class="bg-{{ $technology->color }} rounded py-1 px-2 text-white">{{ $technology->label }}</span>
+                        @empty
+                            -
+                        @endforelse
+                    </li>
                     <li>
                         Stars: {{ $project->n_stars }} <i class="fas fa-star"></i>
                     </li>
