@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Models\Technology;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,6 +29,9 @@ class ProjectController extends Controller
         $project = new Project();
         $categories = Category::select('id', 'label')->get();
         return view('admin.projects.create', compact('project', 'categories'));
+        $technologies = Technology::all();
+
+        return view('admin.projects.create', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -86,7 +90,11 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::select('id', 'label')->get();
-        return view('admin.projects.create', compact('project', 'categories'));
+        $technologies = Technology::all();
+
+        $project_technology_ids = $project->technologies->pluck('id')->toArray();
+
+        return view('admin.projects.edit', compact('project', 'types', 'technologies', 'project_technology_ids'));
     }
 
     /**
