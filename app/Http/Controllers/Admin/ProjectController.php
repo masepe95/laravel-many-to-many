@@ -29,10 +29,9 @@ class ProjectController extends Controller
     {
         $project = new Project();
         $categories = Category::select('id', 'label')->get();
-        return view('admin.projects.create', compact('project', 'categories'));
         $technologies = Technology::all();
 
-        return view('admin.projects.create', compact('project', 'types', 'technologies'));
+        return view('admin.projects.create', compact('project', 'categories', 'technologies'));
     }
 
     /**
@@ -64,6 +63,7 @@ class ProjectController extends Controller
 
         $data = $request->all();
         $project = new Project($data);
+
 
         if (array_key_exists('image', $data)) {
             $ext = $data['image']->extension();
