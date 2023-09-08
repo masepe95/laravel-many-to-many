@@ -36,18 +36,17 @@
                         </div>
                         <div class="buttons d-flex">
                             <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary">
-                                <i class="fas fa-eye me-2"></i>More details
+                                <i class="fas fa-eye"></i>
                             </a>
                             <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning mx-2">
-                                <i class="fas fa-pen me-2"></i>Edit
-                                project
+                                <i class="fas fa-pen"></i>
                             </a>
                             <form class="delete-form" action="{{ route('admin.projects.destroy', $project) }}"
                                 method="POST" data-name="{{ $project->title }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger">
-                                    <i class="fas fa-trash me-2"></i>Delete project
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </div>
