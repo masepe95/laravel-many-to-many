@@ -121,7 +121,11 @@ class ProjectController extends Controller
 
         if (!Arr::exists($data, 'technologies') && count($project->technologies)) $project->technologies()->detach();
         elseif (Arr::exists($data, 'technologies')) $project->technologies()->sync($data['technologies']);
+
+        return to_route('admin.projects.show', $project)->with('alert-message', "Project '$project->title' updated successfully")->with('alert-type', 'success');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
